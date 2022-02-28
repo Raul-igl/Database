@@ -9,14 +9,12 @@ import pandas as pd
 
 req = requests.get("https://www.blockchain.com/btc/unconfirmed-transactions")
 soup = BeautifulSoup(req.text, features="html.parser")
+all = soup.find(class_ ="sc-1g6z4xm-0 hXyplo").text.strip().split()
 
 listcoins = []
 coin = []
-for i in range(0,49):
-    sleep(1)
-    all = soup.find(class_ ="sc-1g6z4xm-0 hXyplo").text.strip().split()
-    
 
+for i in range(0,49):
     splitup = all[0].split('Time')
 
     hash = splitup[0]
