@@ -50,5 +50,10 @@ with open('sorted.csv', 'w', encoding='UTF8') as filewrite:
     write.writerows(listcoins)
 
 dataf = pd.read_csv("sorted.csv")
+dataf.sort_values(["BTC"], axis=0, ascending=[False], inplace=True)
+
+print(dataf)
+
+
 
 
