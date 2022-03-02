@@ -1,6 +1,9 @@
 from posixpath import split
-from time import sleep
+from sqlite3 import Time
+from time import sleep, time
+from tkinter.tix import TEXT
 from turtle import title
+from attr import attr
 from bs4 import BeautifulSoup
 from numpy import double
 import requests
@@ -9,34 +12,36 @@ import pandas as pd
 
 req = requests.get("https://www.blockchain.com/btc/unconfirmed-transactions")
 soup = BeautifulSoup(req.text, features="html.parser")
-all = soup.find(class_ ="sc-1g6z4xm-0 hXyplo").text.strip().split()
+all = soup.findAll('div' , attrs={'class' :"sc-1g6z4xm-0 hXyplo"})
 
 listcoins = []
 coin = []
 
-for i in range(0,49):
-    splitup = all[0].split('Time')
+for i in range(0,48):
+    tekst = all[i].text
+
+    splitup = tekst.split('Time')
 
     hash = splitup[0]
     hash = hash.replace("Hash", "")
-    time = splitup[1]
-    time = time.replace("Amount", "")
-    btc = all[1]
-    btc = btc.replace("(BTC)", "")
-    usd = all[3]
+    Rest = splitup[1]
+    Time = Rest[0:5]
+    money = Rest[17:]
+    splitup2 = money.split('BTCAmount')
+    btc = splitup2[0]
+    usd = splitup2[1]
     usd = usd.replace("(USD)$", "")
-    usd = usd.replace(",", " ")
+    usd = usd.replace(",", "")
     double(btc)
     double(usd)
 
     coin.append(hash)
-    coin.append(time)
+    coin.append(Time)
     coin.append(btc)
     coin.append(usd)
 
     listcoins.append(coin)
     coin = []
-
 
 head = ['Hash', 'Time', 'BTC' , 'USD']
 with open('sorted.csv', 'w', encoding='UTF8') as filewrite:
@@ -45,3 +50,5 @@ with open('sorted.csv', 'w', encoding='UTF8') as filewrite:
     write.writerows(listcoins)
 
 dataf = pd.read_csv("sorted.csv")
+
+
