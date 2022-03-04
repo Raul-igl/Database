@@ -1,7 +1,6 @@
 from posixpath import split
 from sqlite3 import Time
-from time import sleep, time
-from tkinter.tix import TEXT
+import time
 from turtle import title
 from attr import attr
 from bs4 import BeautifulSoup
@@ -18,7 +17,7 @@ while True:
     listcoins = []
     coin = []
 
-    for i in range(0,48):
+    for i in range(0,49):
         tekst = all[i].text
 
         splitup = tekst.split('Time')
@@ -52,9 +51,11 @@ while True:
 
     dataf = pd.read_csv("sorted.csv")
     dataf.sort_values(["BTC"], axis=0, ascending=[False], inplace=True)
-
-    print(dataf)
+    Firstfive = dataf.head(5)
+    print(Firstfive)
     time.sleep(60)
+
+    
 
 
 
