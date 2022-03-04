@@ -9,6 +9,8 @@ import requests
 import csv
 import pandas as pd
 
+print("Enter 'ctrl + c' to stop the automated update")
+
 while True:
     req = requests.get("https://www.blockchain.com/btc/unconfirmed-transactions")
     soup = BeautifulSoup(req.text, features="html.parser")
