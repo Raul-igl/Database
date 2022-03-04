@@ -8,6 +8,9 @@ from numpy import double
 import requests
 import csv
 import pandas as pd
+import pymongo as mongo
+
+client = mongo.MongoClient("mongodb://127.0.0.1:27017")
 
 print("Enter 'ctrl + c' to stop the automated update")
 
