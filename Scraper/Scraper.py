@@ -8,9 +8,9 @@ from numpy import double
 import requests
 import csv
 import pandas as pd
-import pymongo as mongo
+#import pymongo as mongo
 
-client = mongo.MongoClient("mongodb://127.0.0.1:27017")
+#client = mongo.MongoClient("mongodb://127.0.0.1:27017")
 
 print("Enter 'ctrl + c' to stop the automated update")
 
@@ -55,9 +55,18 @@ while True:
         write.writerows(listcoins)
 
     dataf = pd.read_csv("sorted.csv")
-    dataf.sort_values(["BTC"], axis=0, ascending=[False], inplace=True)
-    Firstfive = dataf.head(5)
-    print(Firstfive)
+    dataf = dataf.sort_values(["BTC"], ascending=[False])
+   
+    for i in range(0,5):
+        tijdelijk = dataf.iloc[i]
+
+        Hashbest = tijdelijk["Hash"]
+        timebest = tijdelijk["Time"]
+        btcbest = tijdelijk["BTC"]
+        usdbest = tijdelijk["USD"]
+
+        print(Hashbest,timebest, btcbest, usdbest)
+
     time.sleep(60)
 
     
