@@ -2,7 +2,6 @@ from http import client
 from posixpath import split
 from sqlite3 import Time
 import time
-from turtle import title
 from attr import attr
 from bs4 import BeautifulSoup
 from numpy import double
