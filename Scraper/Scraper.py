@@ -1,3 +1,4 @@
+from http import client
 from posixpath import split
 from sqlite3 import Time
 import time
@@ -10,7 +11,9 @@ import csv
 import pandas as pd
 #import pymongo as mongo
 
-#client = mongo.MongoClient("mongodb://127.0.0.1:27017")
+client = mongo.MongoClient("mongodb://127.0.0.1:27017")
+Scraperdatabase = client["scraperdatabase"]
+mycol = Scraperdatabase["Bestfive"]
 
 print("Enter 'ctrl + c' to stop the automated update")
 
@@ -65,7 +68,8 @@ while True:
         btcbest = tijdelijk["BTC"]
         usdbest = tijdelijk["USD"]
 
-        print(Hashbest,timebest, btcbest, usdbest)
+        data = {'hash' : Hashbest, 'time' : timebest, 'BTC' : btcbest, 'USD' : usdbest}
+        mycol.insert_one(data)
 
     time.sleep(60)
 
