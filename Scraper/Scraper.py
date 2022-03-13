@@ -9,9 +9,9 @@ from numpy import double
 import requests
 import csv
 import pandas as pd
-#import pymongo as mongo
+import pymongo
 
-client = mongo.MongoClient("mongodb://127.0.0.1:27017")
+client = pymongo.MongoClient("mongodb://127.0.0.1:27017")
 Scraperdatabase = client["scraperdatabase"]
 mycol = Scraperdatabase["Bestfive"]
 
