@@ -59,6 +59,9 @@ while True:
     dataf = pd.read_csv("sorted.csv")
     dataf = dataf.sort_values(["BTC"], ascending=[False])
    
+    firstfive = dataf.head(5)
+    print(firstfive)
+    
     for i in range(0,5):
         tijdelijk = dataf.iloc[i]
 
