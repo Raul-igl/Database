@@ -14,3 +14,13 @@ requests
 csv
 pandas
 pymongo
+
+## Scraper screenshot
+![scraper](https://user-images.githubusercontent.com/75836912/158759914-2fa143df-ed68-4916-a1c9-b9bb37893877.png)
+
+
+## Mongodb screenshot
+![Mongodb](https://user-images.githubusercontent.com/75836912/158760021-39f3e60e-3b0c-4854-86c7-dea257d93b16.png)
+
+
+## Redis screenshot
