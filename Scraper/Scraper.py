@@ -9,7 +9,9 @@ import requests
 import csv
 import pandas as pd
 import pymongo
+import redis
 
+r = redis.Redis(host='localhost', port=6379)
 client = pymongo.MongoClient("mongodb://127.0.0.1:27017")
 Scraperdatabase = client["scraperdatabase"]
 mycol = Scraperdatabase["Bestfive"]
@@ -49,6 +51,8 @@ while True:
 
         listcoins.append(coin)
         coin = []
+
+        r.mset("Hash", hash, "Time", Time, "BTC", btc, "USD", usd)
 
     head = ['Hash', 'Time', 'BTC' , 'USD']
     with open('sorted.csv', 'w', encoding='UTF8') as filewrite:
