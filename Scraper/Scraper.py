@@ -51,13 +51,13 @@ while True:
         coin.append(usd)
 
         listcoins.append(coin)
-        redis_dict = pickle.dump(coin)
+        redis_dict = pickle.dumps(coin)
         r.set("mydict", redis_dict)
         read_dict = r.get('mydict')
         yourdict = pickle.loads(read_dict)
         coin = []
                 
-    
+    print(yourdict)
 
     head = ['Hash', 'Time', 'BTC' , 'USD']
     with open('sorted.csv', 'w', encoding='UTF8') as filewrite:
