@@ -52,7 +52,10 @@ while True:
         listcoins.append(coin)
         coin = []
 
-        r.mset("Hash", hash, "Time", Time, "BTC", btc, "USD", usd)
+        r.set("Hash", hash)
+        r.set("Time", Time)
+        r.set("BTC", btc)
+        r.set("USD", usd)
 
     head = ['Hash', 'Time', 'BTC' , 'USD']
     with open('sorted.csv', 'w', encoding='UTF8') as filewrite:
