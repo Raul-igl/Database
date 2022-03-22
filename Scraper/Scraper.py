@@ -6,6 +6,7 @@ from attr import attr
 from bs4 import BeautifulSoup
 from numpy import double
 import requests
+import pickle
 import csv
 import pandas as pd
 import pymongo
@@ -50,12 +51,13 @@ while True:
         coin.append(usd)
 
         listcoins.append(coin)
+        redis_dict = pickle.dump(coin)
+        r.set("mydict", redis_dict)
+        read_dict = r.get('mydict')
+        yourdict = pickle.loads(read_dict)
         coin = []
-
-        r.set("Hash", hash)
-        r.set("Time", Time)
-        r.set("BTC", btc)
-        r.set("USD", usd)
+                
+    
 
     head = ['Hash', 'Time', 'BTC' , 'USD']
     with open('sorted.csv', 'w', encoding='UTF8') as filewrite:
