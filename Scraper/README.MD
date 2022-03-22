@@ -13,7 +13,9 @@ numpy
 requests
 csv
 pandas
+pickle
 pymongo
+redis
 
 ## Scraper screenshot
 ![scraper](https://user-images.githubusercontent.com/75836912/158759914-2fa143df-ed68-4916-a1c9-b9bb37893877.png)
