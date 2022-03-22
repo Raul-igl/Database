@@ -18,6 +18,7 @@ Scraperdatabase = client["scraperdatabase"]
 mycol = Scraperdatabase["Bestfive"]
 
 print("Enter 'ctrl + c' to stop the automated update")
+loop = 0
 
 while True:
     req = requests.get("https://www.blockchain.com/btc/unconfirmed-transactions")
@@ -51,13 +52,18 @@ while True:
         coin.append(usd)
 
         listcoins.append(coin)
+
         redis_dict = pickle.dumps(coin)
-        r.set("mydict", redis_dict)
-        read_dict = r.get('mydict')
+        r.set(f"mydict{loop}", redis_dict)
+
+        read_dict = r.get(f'mydict{loop}')
+        loop = loop + 1
+
         yourdict = pickle.loads(read_dict)
         coin = []
+        print(yourdict)
                 
-    print(yourdict)
+    
 
     head = ['Hash', 'Time', 'BTC' , 'USD']
     with open('sorted.csv', 'w', encoding='UTF8') as filewrite:
@@ -69,7 +75,7 @@ while True:
     dataf = dataf.sort_values(["BTC"], ascending=[False])
    
     firstfive = dataf.head(5)
-    print(firstfive)
+    ##print(firstfive)
     
     for i in range(0,5):
         tijdelijk = dataf.iloc[i]
