@@ -9,10 +9,17 @@ rij = databaseredis["Bestfive"]
 
 
 tel = 0
+tel2 = 0
 for i in range(0,50):
-    read_dict = r.get(f'mydict{tel}')
+    read_dict = r.get(f'fulldata{tel}')
     tel = tel + 1
 
     onerow = pickle.loads(read_dict)
+    readdict = r.get(f'bestfive{tel2}')
+    tel2 = tel2 + 1
+    if tel2 == 5:
+        break
+
+    onerow = pickle.loads(read_dict)
     rij.insert_one(onerow)
-    print(onerow[0])
+    print(onerow['hash'])

@@ -53,10 +53,11 @@ while True:
 
         listcoins.append(coin)
 
-        redis_dict = pickle.dumps(coin)
-        r.set(f"mydict{loop}", redis_dict)
+        tijdelijkerow = {'hash' : hash, 'time' : Time, 'BTC' : btc, 'USD' : usd}
+        redis_dict = pickle.dumps(tijdelijkerow)
+        r.set(f"fulldata{loop}", redis_dict)
 
-        read_dict = r.get(f'mydict{loop}')
+        read_dict = r.get(f'fulldata{loop}')
         loop = loop + 1
 
         yourdict = pickle.loads(read_dict)
@@ -76,7 +77,7 @@ while True:
    
     firstfive = dataf.head(5)
     print(firstfive)
-    
+    loop2 = 0
     for i in range(0,5):
         tijdelijk = dataf.iloc[i]
 
@@ -87,6 +88,15 @@ while True:
 
         data = {'hash' : Hashbest, 'time' : timebest, 'BTC' : btcbest, 'USD' : usdbest}
         mycol.insert_one(data)
+
+        dictred = pickle.dumps(data)
+        r.set(f"bestfive{loop2}", dictred)
+
+        readdict = r.get(f'bestfive{loop2}')
+        loop2 = loop2 + 1
+
+        dict = pickle.loads(readdict)
+        print(dict)
 
     time.sleep(60)
 
