@@ -4,6 +4,9 @@ import pymongo
 
 r = redis.Redis(host='localhost', port=6379)
 client = pymongo.MongoClient("mongodb://127.0.0.1:27017")
+databaseredis = client["databaseredis"]
+rij = databaseredis["Bestfive"]
+
 
 tel = 0
 for i in range(0,50):
@@ -11,8 +14,5 @@ for i in range(0,50):
     tel = tel + 1
 
     onerow = pickle.loads(read_dict)
-
-    databaseredis = client["databaseredis"]
-    rij = databaseredis["Bestfive"]
-    #rij.insert_many(onerow)
-
+    rij.insert_one(onerow)
+    print(onerow[0])
