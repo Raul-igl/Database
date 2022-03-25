@@ -12,23 +12,29 @@ import pandas as pd
 import pymongo
 import redis
 
+#connection to redis and mongodb
 r = redis.Redis(host='localhost', port=6379)
 client = pymongo.MongoClient("mongodb://127.0.0.1:27017")
 
+#make/know which db to use in mongodb
 Scraperdatabase = client["BestfiveDB"]
 mycol = Scraperdatabase["Bestfive"]
 
 print("Enter 'ctrl + c' to stop the automated update")
 loop = 0
 
+#start loop to keep running the code
 while True:
+    #get acces to the site and return the div where the important data is stored
     req = requests.get("https://www.blockchain.com/btc/unconfirmed-transactions")
     soup = BeautifulSoup(req.text, features="html.parser")
     all = soup.findAll('div' , attrs={'class' :"sc-1g6z4xm-0 hXyplo"})
 
+    #start a list to store the all 50 and a temporary list to put 1 into the big list of 50.
     listcoins = []
     coin = []
 
+    #Loops 50 times and takes the HASH, Time, bitcoin quantity and USD quantity
     for i in range(0,49):
         tekst = all[i].text
 
@@ -54,7 +60,9 @@ while True:
 
         listcoins.append(coin)
 
+        # Make a dictionary to put it in to redis
         tijdelijkerow = {'hash' : hash, 'time' : Time, 'BTC' : btc, 'USD' : usd}
+
         redis_dict = pickle.dumps(tijdelijkerow)
         r.set(f"fulldata{loop}", redis_dict)
 
@@ -65,13 +73,14 @@ while True:
         coin = []
                 
     
-
+    #Make a csv with the 50 hashes, time, btc and usd.
     head = ['Hash', 'Time', 'BTC' , 'USD']
     with open('sorted.csv', 'w', encoding='UTF8') as filewrite:
         write = csv.writer(filewrite)
         write.writerow(head)
         write.writerows(listcoins)
 
+    #Sort it on bitcoin from big to small and take the 5 biggest values
     dataf = pd.read_csv("sorted.csv")
     dataf = dataf.sort_values(["BTC"], ascending=[False])
    
@@ -80,6 +89,7 @@ while True:
 
     loop2 = 0
 
+    #loop to take the 5 most valuable variables and put them in redis
     for i in range(0,5):
         tijdelijk = dataf.iloc[i]
 
