@@ -14,7 +14,8 @@ import redis
 
 r = redis.Redis(host='localhost', port=6379)
 client = pymongo.MongoClient("mongodb://127.0.0.1:27017")
-Scraperdatabase = client["scraperdatabase"]
+
+Scraperdatabase = client["BestfiveDB"]
 mycol = Scraperdatabase["Bestfive"]
 
 print("Enter 'ctrl + c' to stop the automated update")
@@ -62,7 +63,6 @@ while True:
 
         yourdict = pickle.loads(read_dict)
         coin = []
-        print(yourdict)
                 
     
 
@@ -77,7 +77,9 @@ while True:
    
     firstfive = dataf.head(5)
     print(firstfive)
+
     loop2 = 0
+
     for i in range(0,5):
         tijdelijk = dataf.iloc[i]
 
@@ -96,7 +98,6 @@ while True:
         loop2 = loop2 + 1
 
         dict = pickle.loads(readdict)
-        print(dict)
 
     time.sleep(60)
 
