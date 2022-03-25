@@ -26,3 +26,4 @@ redis
 
 
 ## Redis screenshot
+![redis](https://user-images.githubusercontent.com/75836912/160136961-a322f06b-6229-4a5c-b0b2-9e86370533ec.png)
